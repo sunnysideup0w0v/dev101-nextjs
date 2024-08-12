@@ -8,7 +8,7 @@ import styled from "styled-components";
 import SubBanner from "./components/SubBanner";
 import { JHAPI } from "../../config";
 
-const Main = () => {
+export const Main = () => {
   const [top10, setTop10] = useState([]);
   const [planned, setPlanned] = useState([]);
   const [updated, setUpdated] = useState([]);
@@ -126,5 +126,3 @@ const PageWrapper = styled.div`
     }
   }
 `;
-
-export default Main;

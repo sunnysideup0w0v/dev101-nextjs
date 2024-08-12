@@ -1,4 +1,3 @@
-import React from "react";
 import { Provider } from "react-redux";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
@@ -6,7 +5,7 @@ import Nav from "./Components/Nav/Nav";
 import Login from "./Pages/Login/Login";
 import LoginAnother from "./Pages/Login/LoginAnother";
 import SignUp from "./Pages/SignUp/SignUp";
-import Main from "./Pages/Main/Main";
+import { Main } from "./Pages/Main";
 import MyPage from "../src/Pages/MyPage/MyPage";
 import SearchPage from "./Pages/SearchPage/SearchPage";
 import Footer from "./Components/Footer";
