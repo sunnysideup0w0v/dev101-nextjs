@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Styled, { css } from "styled-components";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../Components/Button";
 import { AiOutlineCheck } from "react-icons/ai";
 import { GetOrderInfo } from "../../store/PaymentReducer";
@@ -19,7 +19,7 @@ const Payment = () => {
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(0);
   const [smsCheck, setSmsCheck] = useState(0);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -42,7 +42,7 @@ const Payment = () => {
   }, []);
 
   const moveCardPage = () => {
-    history.push(`/detail/${classId}/cardpayment`);
+    navigate(`/detail/${classId}/cardpayment`);
   };
 
   const smsSubmit = async () => {

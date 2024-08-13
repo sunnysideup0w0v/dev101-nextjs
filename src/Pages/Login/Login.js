@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import LoginAnother from "./LoginAnother";
 import styled from "styled-components";
 import { RiEarthFill, RiKakaoTalkFill } from "react-icons/ri";
@@ -26,7 +26,7 @@ const Login = () => {
 
   const KakaoAPI = `${JHAPI}/user/kakao/login`;
   const { Kakao } = window;
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const loginWithKakao = () => {
     Kakao.Auth.login({
@@ -41,7 +41,7 @@ const Login = () => {
           .then((res) => {
             if (res.access_token) {
               localStorage.setItem("TOKEN", res.access_token);
-              history.push("/");
+              navigate("/");
             }
           });
       },

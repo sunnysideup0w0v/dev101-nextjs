@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 import { getTitleAndCover } from "../../../store/CreatorsReducer";
 import { useSelector, useDispatch } from "react-redux";
 import Styled from "styled-components";

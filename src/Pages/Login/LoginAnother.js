@@ -1,6 +1,5 @@
-import React from "react";
 import { useForm } from "react-hook-form";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { GrFacebook, GrApple } from "react-icons/gr";
@@ -24,8 +23,8 @@ const LoginAnother = ({ isInputEmail, isInputPw, inputEmailId, inputEmailPw }) =
     { flatform: "apple", icon: <GrApple />, desc: "애플로 시작하기" },
   ];
 
-  const { register, handleSubmit, errors } = useForm();
-  const history = useHistory();
+  const { handleSubmit } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = (values) => {
     const loginAPI = `${JHAPI}/user/signin`;
@@ -45,7 +44,7 @@ const LoginAnother = ({ isInputEmail, isInputPw, inputEmailId, inputEmailPw }) =
         console.log(res);
         if (res.message === "SUCCESS") {
           localStorage.setItem("TOKEN", res.TOKEN);
-          history.push("/");
+          navigate("/");
         }
         if (res.message === "INVALID_USER") {
           alert("가입되지 않은 회원입니다.");

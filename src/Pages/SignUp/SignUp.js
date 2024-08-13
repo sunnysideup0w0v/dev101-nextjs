@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { RiKakaoTalkFill } from "react-icons/ri";
@@ -33,8 +33,8 @@ const SignUp = () => {
     isInputPasswordCheck: "",
   });
 
-  const { register, handleSubmit, errors } = useForm();
-  const history = useHistory();
+  const { handleSubmit, errors } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     axios
@@ -48,7 +48,7 @@ const SignUp = () => {
       .then((res) => {
         if (res.status === 201) {
           alert("회원가입에 성공했습니다!");
-          history.push("/Login");
+          navigate("/Login");
         }
       })
       .catch((err) => {

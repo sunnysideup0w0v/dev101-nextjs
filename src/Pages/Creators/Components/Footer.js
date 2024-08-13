@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { JHAPI } from "../../../config";
 import { useSelector } from "react-redux";
 
 const Footer = ({ info, coverImg, thumbnailImg, currentPage, handleCurrentPage }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [productId, setProductId] = useState(0);
   const [newBrand, setNewBrand] = useState("크리에이티브");
   const { brand, creatorName, category, subCategory, level } = useSelector(
     (state) => state.CreatorsReducer.infomation,
   );
-  const { classTitle, coverBase, thumbnailBase } = useSelector(
-    (state) => state.CreatorsReducer.titleAndCover,
-  );
+  const { classTitle } = useSelector((state) => state.CreatorsReducer.titleAndCover);
 
   useEffect(() => {
     if (Number(brand) === 0) {
@@ -25,8 +23,6 @@ const Footer = ({ info, coverImg, thumbnailImg, currentPage, handleCurrentPage }
       setNewBrand("머니");
     }
   }, [brand]);
-
-  useEffect(() => {}, [classTitle, coverBase, thumbnailBase]);
 
   const handlePrev = () => {
     if (currentPage === "last") {
@@ -47,17 +43,15 @@ const Footer = ({ info, coverImg, thumbnailImg, currentPage, handleCurrentPage }
       formData.append("sub_category", category);
       formData.append("category_detail", subCategory);
       formData.append("level", level);
-      try {
-        axios
-          .post(`${JHAPI}/user/basicinfo`, formData, {
-            headers: {
-              Authorization: localStorage.getItem("TOKEN"),
-            },
-          })
-          .then((res) => {
-            res.data.product_id && setProductId(res.data.product_id);
-          });
-      } catch (err) {}
+      axios
+        .post(`${JHAPI}/user/basicinfo`, formData, {
+          headers: {
+            Authorization: localStorage.getItem("TOKEN"),
+          },
+        })
+        .then((res) => {
+          res.data.product_id && setProductId(res.data.product_id);
+        });
     } else if (currentPage === "title") {
       handleCurrentPage("info");
       const formData = new FormData();
@@ -94,7 +88,7 @@ const Footer = ({ info, coverImg, thumbnailImg, currentPage, handleCurrentPage }
         console.log(err);
       }
       alert("클래스 생성에 성공하셨습니다.");
-      history.push("/");
+      navigate("/");
     }
   };
   return (

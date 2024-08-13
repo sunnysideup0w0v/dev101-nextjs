@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaRegHeart, FaHeart, FaThumbsUp, FaFireAlt } from "react-icons/fa";
 import styled from "styled-components";
 const timePassed = (time) => {
@@ -40,10 +40,10 @@ const MyClassCard = ({
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [pricePerMonth, setPricePerMonth] = useState(0);
-  let history = useHistory();
+  let navigate = useNavigate();
   const cardHandler = (e) => {
     if (isOpening !== false) {
-      return history.push(`/detail/${product_id}`);
+      return navigate(`/detail/${product_id}`);
     }
     modalHandler(e, product_id);
   };

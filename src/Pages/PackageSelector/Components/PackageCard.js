@@ -1,15 +1,14 @@
-import React from "react";
 import Styled from "styled-components";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { RecommendLabel } from "./Label";
 import { AiFillYoutube } from "react-icons/ai";
 
 const PackageCard = ({ ClassInfo }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { id: classId } = useParams();
 
   const handlePayment = () => {
-    history.push(`/detail/${classId}/payment`);
+    navigate(`/detail/${classId}/payment`);
   };
   const { creator, price, discount, discounted_price } = ClassInfo;
   return (

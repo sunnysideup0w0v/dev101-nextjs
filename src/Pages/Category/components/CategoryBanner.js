@@ -1,14 +1,14 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const creativeBtn = ["미술", "요리/음료"];
 const careerBtn = ["데이터/개발", "글쓰기/콘텐츠"];
 
 const SubCategory = ({ category }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const btnClicked = (e) => {
     const btnVal = e.target.value;
-    history.push(`/searchPage?query=${btnVal}`);
+    navigate(`/searchPage?query=${btnVal}`);
   };
 
   return (

@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Styled from "styled-components";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { useSelector } from "react-redux";
 
 const Slick = () => {
   const [currentSection, setCurrentSection] = useState(1);
-  const { brand, category, subCategory, level, creatorName } = useSelector(
+  const { category, subCategory, level, creatorName } = useSelector(
     (state) => state.CreatorsReducer.infomation,
   );
-  const { cover, thumbnail, classTitle } = useSelector(
-    (state) => state.CreatorsReducer.titleAndCover,
-  );
+  const { cover, classTitle } = useSelector((state) => state.CreatorsReducer.titleAndCover);
   const infoImages = useSelector((state) => state.CreatorsReducer.infoImages);
-
-  useEffect(() => {}, [infoImages]);
 
   const SlickCurrentSection = () => {
     switch (currentSection) {

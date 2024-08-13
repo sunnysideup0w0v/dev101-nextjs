@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaRegHeart, FaHeart, FaThumbsUp, FaFireAlt } from "react-icons/fa";
 import styled from "styled-components";
@@ -45,7 +45,7 @@ const ClassCard = ({
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [pricePerMonth, setPricePerMonth] = useState(0);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const likeBtnHandler = () => {
     axios
@@ -64,7 +64,7 @@ const ClassCard = ({
       .catch((err) => {
         if (err.message.includes("400")) {
           alert("로그인을 먼저 해주세요.");
-          history.push("/Login");
+          navigate("/Login");
         }
       });
     setIsLiked(!isLiked);
@@ -86,7 +86,7 @@ const ClassCard = ({
       .catch((err) => {
         if (err.message.includes("400")) {
           alert("로그인을 먼저 해주세요.");
-          history.push("/Login");
+          navigate("/Login");
         }
       });
   };
@@ -105,7 +105,7 @@ const ClassCard = ({
       </LikeBtn>
       <div
         onClick={() =>
-          is_open === false ? modalHandler(product_id) : history.push(`/detail/${product_id}`)
+          is_open === false ? modalHandler(product_id) : navigate(`/detail/${product_id}`)
         }
       >
         <HoverImgBox>

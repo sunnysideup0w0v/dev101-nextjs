@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import {
@@ -16,7 +16,7 @@ const IsPlannedModal = ({ modalVisible, id, modalHandler }) => {
   const [productInfo, setProductInfo] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [extrainfo, setExtraInfo] = useState({});
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -78,7 +78,7 @@ const IsPlannedModal = ({ modalVisible, id, modalHandler }) => {
       .catch((err) => {
         if (err.message.includes("400")) {
           alert("로그인을 먼저 해주세요.");
-          history.push("/Login");
+          navigate("/Login");
         }
       });
   };

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useState, useEffect, FormEventHandler } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
@@ -7,13 +7,16 @@ import styled from "styled-components";
 import { JHAPI } from "../../config";
 
 const Nav = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const [isLogin, setIsLogin] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isClick, setIsClick] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState<{ user_profile: string; user_name: string }>({
+    user_profile: "",
+    user_name: "",
+  });
   const isNavActive = !(
     pathname === "/Login" ||
     pathname.includes("payment") ||
@@ -25,9 +28,13 @@ const Nav = () => {
     setIsFocus(!isFocus);
   };
 
-  const submitSearchBox = (e) => {
+  const submitSearchBox: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    history.push(`searchPage?query=${inputValue}`);
+    navigate(`searchPage?query=${inputValue}`);
+  };
+
+  const isVisibleUserBox = () => {
+    setIsClick(!isClick);
   };
 
   const logout = () => {
@@ -39,16 +46,12 @@ const Nav = () => {
 
   const Token = localStorage.getItem("TOKEN");
 
-  const isVisibleUserBox = () => {
-    setIsClick(!isClick);
-  };
-
   useEffect(() => {
     if (localStorage.getItem("TOKEN")) {
       fetch(`${JHAPI}/user/me`, {
-        headers: {
-          Authorization: localStorage.getItem("TOKEN"),
-        },
+        headers: new Headers({
+          Authorization: `${localStorage.getItem("TOKEN")}`,
+        }),
       })
         .then((res) => res.json())
         .then((res) => {
@@ -62,7 +65,7 @@ const Nav = () => {
   }, []);
 
   return (
-    <NavBar className="nav" isNavActive={isNavActive} onClick={(e) => isVisibleUserBox(e)}>
+    <NavBar className="nav" $isNavActive={isNavActive} onClick={isVisibleUserBox}>
       <NavContainer>
         {isClick && (
           <UserBox>
@@ -152,7 +155,7 @@ const Nav = () => {
             </div>
           )}
         </MainHeader>
-        <NavBottom isNavBottomActive={isNavBottomActive}>
+        <NavBottom $isNavBottomActive={isNavBottomActive}>
           <Link to="/">
             <FiMenu />
           </Link>
@@ -187,8 +190,8 @@ const Nav = () => {
 };
 export default Nav;
 
-const NavBar = styled.div`
-  display: ${({ isNavActive }) => (isNavActive ? "block" : "none")};
+const NavBar = styled.div<{ $isNavActive: boolean }>`
+  display: ${({ $isNavActive }) => ($isNavActive ? "block" : "none")};
   position: fixed;
   top: 0;
   left: 0;
@@ -272,10 +275,10 @@ const MainHeader = styled.div`
   }
 `;
 
-const NavBottom = styled.div`
+const NavBottom = styled.div<{ $isNavBottomActive: boolean }>`
   margin-top: 15px;
   width: 100%;
-  display: ${({ isNavBottomActive }) => (isNavBottomActive ? "flex" : "none")};
+  display: ${({ $isNavBottomActive }) => ($isNavBottomActive ? "flex" : "none")};
   justify-content: space-between;
   background-color: #fff;
   a {

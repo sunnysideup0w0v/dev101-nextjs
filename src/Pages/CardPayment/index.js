@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Styled from "styled-components";
 import { AiFillWarning } from "react-icons/ai";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CreaditCard from "./Components/CreaditCard";
 import Popup from "./Components/Popup";
 import { useSelector } from "react-redux";
@@ -12,7 +12,8 @@ const YEARS = range(19, 25);
 const INSTALLMONTHS = range(2, 12);
 
 const CardPayment = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
+
   const [cardNumber, setCardNumber] = useState("");
   const [cardMonth, setCardMonth] = useState("월");
   const [cardYear, setCardYear] = useState("년");
@@ -105,7 +106,7 @@ const CardPayment = () => {
       setPaymentSuccess(false);
     }, 2000);
     await setTimeout(() => {
-      history.push("/");
+      navigate("/");
     }, 1000);
   };
   return (

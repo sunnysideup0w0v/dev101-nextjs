@@ -1,7 +1,8 @@
+import React from "react";
 import { Provider } from "react-redux";
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import Nav from "./Components/Nav/Nav";
+import Nav from "./Components/Nav/Nav"; // Nav 컴포넌트 안보임...?
 import Login from "./Pages/Login/Login";
 import LoginAnother from "./Pages/Login/LoginAnother";
 import SignUp from "./Pages/SignUp/SignUp";
@@ -19,15 +20,22 @@ import CardPayment from "./Pages/CardPayment";
 import Category from "./Pages/Category/Category";
 import ScrollToTop from "./Components/ScrollToTop";
 
-const Routes = () => {
+const Router = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Router>
-          <ScrollToTop />
+        <BrowserRouter>
           <Nav />
-          <Switch>
-            <Route exact path="/" component={Main} />
+          <Routes>
+            <Route
+              path="/"
+              component={
+                <>
+                  <ScrollToTop />
+                </>
+              }
+            />
+            <Route index element={<Main />} />
             <Route exact path="/category/:id" component={Category} />
             <Route exact path="/detail/:id" component={Detail} />
             <Route exact path="/Login" component={Login} />
@@ -43,12 +51,12 @@ const Routes = () => {
             <Route exact path="/Login" component={Login} />
             <Route exact path="/SignUp" component={SignUp} />
             <Route exact path="/LoginAnother" component={LoginAnother} />
-          </Switch>
+          </Routes>
           <Footer />
-        </Router>
+        </BrowserRouter>
       </ThemeProvider>
     </Provider>
   );
 };
 
-export default Routes;
+export default Router;

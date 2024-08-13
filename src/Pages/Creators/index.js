@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Nav from "./Components/Nav";
 import Aside from "./Components/Aside";
 import Footer from "./Components/Footer";
@@ -21,7 +21,7 @@ const Creators = () => {
     two: {},
     three: {},
   });
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleExit = () => {
     setIsExit((prev) => !prev);
@@ -61,7 +61,7 @@ const Creators = () => {
 
   const plzLeaveMe = () => {
     alert("안돼요 못나가요");
-    history.push("/");
+    navigate("/");
   };
 
   return (

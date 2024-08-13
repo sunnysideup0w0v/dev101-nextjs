@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import styled, { css } from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   AiOutlineHeart,
@@ -21,7 +21,7 @@ const Aside = ({ classId }) => {
   const [price, setPrice] = useState("");
   const [heartCount, setHeartCount] = useState(0);
   const [isHeartToggle, setIsHeartToggle] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { detail, detailAside, productId } = useSelector((state) => state.DetailReducer);
   const contentItems = [
     [<AiOutlineYoutube size="18" />, <span>콘텐츠 이용권</span>],
@@ -41,7 +41,7 @@ const Aside = ({ classId }) => {
   }, [detailAside]);
 
   const classRequest = (id) => {
-    history.push(`/detail/${productId}/package`);
+    navigate(`/detail/${productId}/package`);
   };
 
   const heartButtonClick = () => {

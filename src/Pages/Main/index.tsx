@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import SliderComponent from "../../Components/SliderComponent";
+import SliderComponent, { Data } from "../../Components/SliderComponent";
 import MainSlider from "./components/MainSlider";
 import InfiniteScroll from "../../Components/InfiniteScroll";
 import IsPlannedModal from "../../Components/IsPlannedModal";
-import styled from "styled-components";
 import SubBanner from "./components/SubBanner";
 import { JHAPI } from "../../config";
+import { MainSection, PageWrapper } from "./components/styled";
 
 export const Main = () => {
   const [top10, setTop10] = useState([]);
@@ -57,7 +57,10 @@ export const Main = () => {
       rootMargin: "0px",
       threshold: 1,
     };
-    let callback = (entries) => {
+
+    let callback: IntersectionObserverCallback = (entries) => {
+      console.log(entries);
+
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           if (entry.intersectionRatio >= 0.75) {
@@ -68,10 +71,11 @@ export const Main = () => {
     };
     let target = document.querySelector(".observer");
     let observer = new IntersectionObserver(callback, options);
-    observer.observe(target);
+
+    if (target) observer.observe(target);
   };
 
-  const modalHandler = (itemId) => {
+  const modalHandler = (itemId: string) => {
     setModalProductId(itemId);
     setModalVisible(!modalVisible);
   };
@@ -83,7 +87,7 @@ export const Main = () => {
         <PageWrapper>
           <div>
             <h3>지금, 인기 TOP 10</h3>
-            <SliderComponent dataList={top10} />
+            <SliderComponent dataList={top10 as Data[]} />
             <h3>오픈 예정 클래스</h3>
             <SliderComponent dataList={planned} modalHandler={modalHandler} />
             <SubBanner />
@@ -103,26 +107,3 @@ export const Main = () => {
     </>
   );
 };
-
-const MainSection = styled.section`
-  overflow: hidden;
-  .observer {
-    position: absolute;
-    bottom: 300px;
-  }
-`;
-
-const PageWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-
-  > div {
-    width: ${(props) => props.theme.contentWrapperWidth};
-    position: relative;
-    h3 {
-      font-weight: 700;
-      font-size: 26px;
-      margin-bottom: 20px;
-    }
-  }
-`;
